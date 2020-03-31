@@ -1,229 +1,118 @@
-p1=0
-p2=0
+puntaje1=0
+puntaje2=0
+tablero=(1 2 3 4 5 6 7 8 9)
+jugando=true
+partida=true
 
-while true; do
+function mostrarTablero {
+	echo " ${tablero[0]} | ${tablero[1]} | ${tablero[2]}"
+	echo "-----------"
+	echo " ${tablero[3]} | ${tablero[4]} | ${tablero[5]}"
+	echo "-----------"
+	echo " ${tablero[6]} | ${tablero[7]} | ${tablero[8]}"
+}
+function marcarCasilla {
+	if [[ ${tablero[$1-1]} == "X" || ${tablero[$1-1]} == "O" ]]; then
+		echo "La casilla se encuentra marcada. Selecciona otra."
+		sleep 2
+	else 
+		if [[ $turno -eq 0 ]]; then
+			tablero[$1-1]="X"
+			turno=1
+		else
+			tablero[$1-1]="O"
+			turno=0
+		fi
+	fi
+}
+function checkResultado {
+	if [[ ${tablero[0]} == "$1" && ${tablero[1]} == "$1" && ${tablero[2]} == "$1" || ${tablero[3]} == "$1" && ${tablero[4]} == "$1" && ${tablero[5]} == "$1" || ${tablero[6]} == "$1" && ${tablero[7]} == "$1" && ${tablero[8]} == "$1" || ${tablero[0]} == "$1" && ${tablero[3]} == "$1" && ${tablero[6]} == "$1" || ${tablero[1]} == "$1" && ${tablero[4]} == "$1" && ${tablero[7]} == "$1" || ${tablero[2]} == "$1" && ${tablero[5]} == "$1" && ${tablero[8]} == "$1" || ${tablero[0]} == "$1" && ${tablero[4]} = "$1" && ${tablero[8]} == "$1" || ${tablero[2]} == "$1" && ${tablero[4]} == "$1" && ${tablero[6]} == "$1" ]]; then
+		echo "El jugador $2 ha ganado."
+		puntaje$2=$(($puntaje$2+1))
+		partida=false
 
-	a=1
-	b=2
-	c=3
-	d=4
-	e=5
-	f=6
-	g=7
-	h=8
-	i=9
+		echo "funciona"
+	fi
+}
+
+while $jugando == true; do
+    
 	turno=0
-	echo Turno del jugador 1:
+	echo "Turno del jugador 1:"
 	echo 
-	echo ' '$a' | '$b' | '$c' '
-	echo '-----------'
-	echo ' '$d' | '$e' | '$f' '
-	echo '-----------'
-	echo ' '$g' | '$h' | '$i' '
 	
+	mostrarTablero
 
-	while true; do
+	while $partida == true; do
 
+		
 		while true; do
-			echo
-			echo Elije una casilla.
-			read ans
+			echo "Elije una casilla."
+			read casillaMarcada
 			rs=^[0-9]+$
 	
-			if ! [[ $ans =~ $rs ]]; then
-				echo Has introducido un valor incorrecto. Intenta nuevamente
+			if ! [[ $casillaMarcada =~ $rs ]]; then
+				echo "Has introducido un valor incorrecto. Intenta nuevamente."
 			else 
-				break
+				if [[ $casillaMarcada -lt 1 || $casillaMarcada -gt 9 ]]; then
+					echo "Error. Elije un número entre 1 y 8."
+				else
+					break
+				fi
 			fi
 		done
 
-		case $ans in
-			1)
-				if [[ $a != X && $a != O ]]; then
-					if [[ $turno -eq 0 ]]; then
-						a=X
-						turno=1
-
-					elif [[ $turno -eq 1 ]]; then
-						a=O
-						turno=0
-					fi
-				else 
-					echo La casilla se encuentra marcada. Selecciona otra.
-					sleep 2
-				fi
-			;;
-			2)
-				if [[ $b != X && $b != O ]]; then
-					if [[ $turno -eq 0 ]]; then
-						b=X
-						turno=1
-
-					elif [[ $turno -eq 1 ]]; then
-						b=O
-						turno=0
-					fi
-				else 
-					echo La casilla se encuentra marcada. Selecciona otra.
-					sleep 2
-				fi
-			;;	
-			3)
-				if [[ $c != X && $c != O ]]; then
-					if [[ $turno -eq 0 ]]; then
-						c=X
-						turno=1
-
-					elif [[ $turno -eq 1 ]]; then
-						c=O
-						turno=0
-					fi
-				else 
-					echo La casilla se encuentra marcada. Selecciona otra.
-					sleep 2
-				fi	
-			;;
-			4)
-				if [[ $d != X && $d != O ]]; then
-					if [[ $turno -eq 0 ]]; then
-						d=X
-						turno=1
-
-					elif [[ $turno -eq 1 ]]; then
-						d=O
-						turno=0
-					fi
-				else 
-					echo La casilla se encuentra marcada. Selecciona otra.
-					sleep 2
-				fi	
-			;;
-			5)
-				if [[ $e != X && $e != O ]]; then
-					if [[ $turno -eq 0 ]]; then
-						e=X
-						turno=1
-
-					elif [[ $turno -eq 1 ]]; then
-						e=O
-						turno=0
-					fi
-				else 
-					echo La casilla se encuentra marcada. Selecciona otra.
-					sleep 2
-				fi	
-			;;
-			6)
-				if [[ $f != X && $f != O ]]; then
-					if [[ $turno -eq 0 ]]; then
-						f=X
-						turno=1
-
-					elif [[ $turno -eq 1 ]]; then
-						f=O
-						turno=0
-					fi
-				else 
-					echo La casilla se encuentra marcada. Selecciona otra.
-					sleep 2
-				fi	
-			;;
-			7)
-				if [[ $g != X && $g != O ]]; then
-					if [[ $turno -eq 0 ]]; then
-						g=X
-						turno=1
-
-					elif [[ $turno -eq 1 ]]; then
-						g=O
-						turno=0
-					fi
-				else 
-					echo La casilla se encuentra marcada. Selecciona otra.
-					sleep 2
-				fi	
-			;;
-			8)
-				if [[ $h != X && $h != O ]]; then
-					if [[ $turno -eq 0 ]]; then
-						h=X
-						turno=1
-
-					elif [[ $turno -eq 1 ]]; then
-						h=O
-						turno=0
-					fi
-				else 
-					echo La casilla se encuentra marcada. Selecciona otra.
-					sleep 2
-				fi	
-			;;
-			9)
-				if [[ $i != X && $i != O ]]; then
-					if [[ $turno -eq 0 ]]; then
-						i=X
-						turno=1
-
-					elif [[ $turno -eq 1 ]]; then
-						i=O
-						turno=0
-					fi
-				else 
-					echo La casilla se encuentra marcada. Selecciona otra.
-					sleep 2
-				fi	
-			;;
-		esac
+		marcarCasilla $casillaMarcada
 
 		clear
 		sleep 1
-		echo ' '$a' | '$b' | '$c' '
-		echo '-----------'
-		echo ' '$d' | '$e' | '$f' '
-		echo '-----------'
-		echo ' '$g' | '$h' | '$i' '
+		
+		mostrarTablero
 
-		if [[ $a = X && $b = X && $c = X || $d = X && $e = X && $f = X || $g = X && $h = X && $i = X || $a = X && $d = X && $g = X || $b = X && $e = X && $h = X || $c = X && $f = X && $i = X || $a = X && $e = X && $i = X || $c = X && $e = X && $g = X ]]; then
+		if [[ $turno -eq 0 ]]; then
+			checkResultado "X" 1
+
+
+			exit 1
 			echo El jugador 1 ha ganado.
-			p1=$(($p1+1))
-			break
-		elif [[ $a = O && $b = O && $c = O || $d = O && $e = O && $f = O || $g = O && $h = O && $i = O || $a = O && $d = O && $g = O || $b = O && $e = O && $h = O || $c = O && $f = O && $i = O || $a = O && $e = O && $i = O || $c = O && $e = O && $g = O ]]; then
+			puntaje1=$(($puntaje1+1))
+			partida=false
+		elif [[ ${tablero[0]} == "O" && ${tablero[1]} == "O" && ${tablero[2]} == "O" || ${tablero[3]} == "O" && ${tablero[4]} == "O" && ${tablero[5]} == "O" || ${tablero[6]} == "O" && ${tablero[7]} == "O" && ${tablero[8]} == "O" || ${tablero[0]} == "O" && ${tablero[3]} == "O" && ${tablero[6]} == "O" || ${tablero[1]} == "O" && ${tablero[4]} == "O" && ${tablero[7]} == "O" || ${tablero[2]} == "O" && ${tablero[5]} == "O" && ${tablero[8]} == "O" || ${tablero[0]} == "O" && ${tablero[4]} == "O" && ${tablero[8]} == "O" || ${tablero[2]} == "O" && ${tablero[4]} == "O" && ${tablero[6]} == "O" ]]; then
 			echo El jugador 2 ha ganado.
-			p2=$(($p2+1))
-			break
-		elif [[ $a != 1 && $b != 2 && $c != 3 && $d != 4 && $e != 5 && $f != 6 && $g != 7 && $h != 8 && $i != 9 ]]; then
-			echo Empate
-			break
+			puntaje2=$(($puntaje2+1))
+			partida=false
+		elif [[ ${tablero[0]} != 1 && ${tablero[1]} != 2 && ${tablero[2]} != 3 && ${tablero[3]} != 4 && ${tablero[4]} != 5 && ${tablero[5]} != 6 && ${tablero[6]} != 7 && ${tablero[7]} != 8 && ${tablero[8]} != 9 ]]; then
+			echo "Empate"
+			partida=false
 		fi
 		
 		if [[ $turno -eq 1 ]]; then
-			echo Turno del Jugador 2.	
-		elif [[ $turno -eq 0 ]]; then
-			echo Turno del Jugador 1.
+			echo "Turno del Jugador 2."
+		else
+			echo "Turno del Jugador 1."
 		fi
 	done
 	
-	echo '¿Deseas jugar otra partida? S / N'
+	echo "¿Deseas jugar otra partida? S / N"
 	read rta
 	if [ ${rta^^} = S ]; then
-		echo 'Partidas ganadas por el J1: '$p1
-		echo 'Partidas ganadas por el J2: '$p2
+		echo "Partidas ganadas por el J1: $p1"
+		echo "Partidas ganadas por el J2: $p2"
 	elif [ ${rta^^} = N ]; then
-		break
+		jugando=false
 	else
-		echo 'Error. Introduce S / N.'
+		echo "Error. Introduce S / N."
 	fi
 done
 
-echo 'Fin del juego. Puntaje final: '
-echo 'Jugador 1:' $p1
-echo 'Jugador 2:' $p2
+echo "Fin del juego. Puntaje final: "
+echo "Jugador 1: $puntaje1"
+echo "Jugador 2: $puntaje2"
 
-if [[ $p1 -gt $p2 ]]; then
-	echo Ha ganado el Jugador 1.
-elif [[ $p2 -gt $p1 ]]; then
-	echo Ha ganado el Jugador 2.
-elif [[ $p1 -eq $p2 ]]; then
-	echo Empate.
+if [[ $puntaje1 -gt $puntaje2 ]]; then
+	echo "Ha ganado el Jugador 1."
+elif [[ $puntaje2 -gt $puntaje1 ]]; then
+	echo "Ha ganado el Jugador 2."
+elif [[ $puntaje1 -eq $puntaje2 ]]; then
+	echo "Empate."
 fi
-
